@@ -80,7 +80,7 @@ The report must contain the following sections in order. Do not omit any section
    ```
    If any remain, fill them before declaring complete.
 
-9. **Check for `-chat-save-transcript` skill** — use `file_search` to check whether `.claude/skills/-chat-save-transcript/SKILL.md` exists in the workspace.
+9. **Check for `-chat-save-transcript` skill** — use `file_search` to check whether `.github/skills/-chat-save-transcript/SKILL.md` exists in the workspace.
    - **If found:** proceed to Step 10.
    - **If not found:** note in the response that the `-chat-save-transcript` skill was not found and no session transcript was saved. Stop here.
 
