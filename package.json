@@ -1,0 +1,48 @@
+{
+  "name": "honest-agent-setup",
+  "displayName": "Honest Agent: Agent Conduct Setup",
+  "description": "Adds AI agent conduct rules and enforcement structure to your project.",
+  "version": "1.0.2",
+  "publisher": "vega-discoveries",
+  "icon": "images/icon.png",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "agent",
+    "conduct",
+    "rules",
+    "copilot",
+    "claude",
+    "honest",
+    "governance"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:extension.honest-agent-setup.run"
+  ],
+  "main": "./extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.honest-agent-setup.run",
+        "title": "Honest Agent: Add Agent Conduct Rules to Project"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "extension.honest-agent-setup.run"
+        }
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VegaDiscoveries/Honest-Agent-Setup"
+  },
+  "license": "SEE LICENSE IN LICENSE.txt"
+}

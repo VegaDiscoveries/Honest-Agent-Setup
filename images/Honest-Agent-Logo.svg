@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0D1B3E"/>
+      <stop offset="100%" style="stop-color:#06101F"/>
+    </linearGradient>
+    <radialGradient id="brainGlow" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" style="stop-color:#40C4FF;stop-opacity:0.18"/>
+      <stop offset="100%" style="stop-color:#40C4FF;stop-opacity:0"/>
+    </radialGradient>
+    <filter id="nodeGlow">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="128" height="128" rx="22" fill="url(#bg)"/>
+
+  <!-- Halo -->
+  <ellipse cx="64" cy="18" rx="22" ry="6"
+           fill="none" stroke="#40C4FF" stroke-width="3.5" stroke-opacity="0.85" filter="url(#nodeGlow)"/>
+
+  <!-- Antenna -->
+  <line x1="64" y1="25" x2="64" y2="34" stroke="#40C4FF" stroke-width="2.5" stroke-opacity="0.7" stroke-linecap="round"/>
+  <circle cx="64" cy="22" r="3.5" fill="#40C4FF" opacity="0.9" filter="url(#nodeGlow)"/>
+
+  <!-- Robot head shell -->
+  <rect x="30" y="34" width="68" height="55" rx="12" fill="#0D1B3E" stroke="#40C4FF" stroke-width="2"/>
+
+  <!-- Neural brain window (lighter area inside head) -->
+  <rect x="36" y="40" width="56" height="36" rx="7" fill="url(#brainGlow)"/>
+
+  <!-- Neural network nodes -->
+  <!-- Layer 1 (left) -->
+  <circle cx="46" cy="50" r="3.5" fill="#40C4FF" filter="url(#nodeGlow)"/>
+  <circle cx="46" cy="64" r="3.5" fill="#40C4FF" filter="url(#nodeGlow)"/>
+  <circle cx="46" cy="78" r="3"   fill="#40C4FF" opacity="0.7" filter="url(#nodeGlow)"/>
+  <!-- Layer 2 (mid-left) -->
+  <circle cx="60" cy="45" r="3"   fill="#80DEEA" filter="url(#nodeGlow)"/>
+  <circle cx="60" cy="58" r="3.5" fill="#40C4FF" filter="url(#nodeGlow)"/>
+  <circle cx="60" cy="71" r="3"   fill="#80DEEA" filter="url(#nodeGlow)"/>
+  <!-- Layer 3 (mid-right) -->
+  <circle cx="74" cy="50" r="3.5" fill="#40C4FF" filter="url(#nodeGlow)"/>
+  <circle cx="74" cy="64" r="3"   fill="#80DEEA" filter="url(#nodeGlow)"/>
+  <circle cx="74" cy="78" r="3"   fill="#40C4FF" opacity="0.7" filter="url(#nodeGlow)"/>
+  <!-- Layer 4 (right) – output, brighter -->
+  <circle cx="86" cy="55" r="4"   fill="#E0F7FA" filter="url(#nodeGlow)"/>
+  <circle cx="86" cy="69" r="4"   fill="#40C4FF" filter="url(#nodeGlow)"/>
+
+  <!-- Connections (layer 1→2) -->
+  <g stroke="#40C4FF" stroke-width="1" stroke-opacity="0.35">
+    <line x1="46" y1="50" x2="60" y2="45"/>
+    <line x1="46" y1="50" x2="60" y2="58"/>
+    <line x1="46" y1="64" x2="60" y2="58"/>
+    <line x1="46" y1="64" x2="60" y2="71"/>
+    <line x1="46" y1="78" x2="60" y2="71"/>
+  </g>
+  <!-- Connections (layer 2→3) -->
+  <g stroke="#40C4FF" stroke-width="1" stroke-opacity="0.35">
+    <line x1="60" y1="45" x2="74" y2="50"/>
+    <line x1="60" y1="58" x2="74" y2="50"/>
+    <line x1="60" y1="58" x2="74" y2="64"/>
+    <line x1="60" y1="71" x2="74" y2="64"/>
+    <line x1="60" y1="71" x2="74" y2="78"/>
+  </g>
+  <!-- Connections (layer 3→4) -->
+  <g stroke="#40C4FF" stroke-width="1" stroke-opacity="0.35">
+    <line x1="74" y1="50" x2="86" y2="55"/>
+    <line x1="74" y1="64" x2="86" y2="55"/>
+    <line x1="74" y1="64" x2="86" y2="69"/>
+    <line x1="74" y1="78" x2="86" y2="69"/>
+  </g>
+
+  <!-- Robot body -->
+  <rect x="44" y="90" width="40" height="22" rx="7" fill="#0D1B3E" stroke="#40C4FF" stroke-width="1.8"/>
+  <!-- Chest check indicator -->
+  <polyline points="52,101 58,107 76,95"
+            fill="none" stroke="#40C4FF" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" filter="url(#nodeGlow)"/>
+</svg>
