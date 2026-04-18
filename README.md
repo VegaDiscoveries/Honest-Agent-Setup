@@ -51,4 +51,4 @@ The agent reads the session violation log and generates a dated markdown report 
 
 - **AGENTS.md already exists** — the conduct rules are appended to it.
 - **CLAUDE.md already exists** — a `@../AGENTS.md` directive is appended to the existing file.
-- **Either SKILL.md already exists** — you are prompted before any overwrite.
+- **Any SKILL.md already exists** — you are prompted before any overwrite.
