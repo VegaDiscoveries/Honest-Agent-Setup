@@ -26,11 +26,16 @@ The rules define **22 Forbidden Actions (F-1â€“F-22)**, **4 Avoid Patterns (A-1â
 
 ## Usage
 
+When the extension is first installed, a setup dialog appears automatically. Click **Continue** to deploy the conduct files into your open workspace.
+
+To run setup again at any time:
+
 1. Open the project folder you want to add conduct rules to.
 2. Open the Command Palette (`Ctrl+Shift+P`).
 3. Run **"Honest Agent: Add Agent Conduct Rules to Project"**.
-4. Read the intro screen and click **Continue**.
-5. After setup completes, run `/clear` in a Copilot Chat window to activate the rules.
+4. Click **Continue** in the dialog.
+
+After setup completes, run `/clear` in a Copilot Chat window to activate the rules.
 
 ## Generating a conduct report
 
