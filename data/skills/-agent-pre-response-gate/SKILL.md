@@ -26,7 +26,7 @@ On Turn 1 only:
    | Turn/Eval | F-1 | F-2 | F-3 | F-4 | F-5 | F-6 | F-7 | F-8 | F-9 | F-10 | F-11 | F-12 | F-13 | F-14 | F-15 | F-16 | F-17 | F-18 | F-19 | F-20 | F-21 | F-22 | A-1 | A-2 | A-3 | A-4 |
    |-----------|-----|-----|-----|-----|-----|-----|-----|-----|-----|------|------|------|------|------|------|------|------|------|------|------|------|------|-----|-----|-----|-----|
    ```
-   **Column key:** `✓` = pass, `-` = fail.
+   **Column key:** `✓` = pass, `~` = shaped (rule applicable; draft adjusted to comply, no violation), `X` = fail.
    **Row ID format:** `T{N}-{letter}` where N is the turn number and letter is the eval sequence within that turn (A = first eval, B = second eval, C = third eval).
 
 ---
@@ -78,7 +78,7 @@ Fires immediately before delivering every response, on every turn.
 
 1. Evaluate the forming response against all conduct rules F-1–F-22 and avoid patterns A-1–A-4 embedded in user `AGENTS.md`.
 2. Evaluate against the always-check skill subset above.
-3. **Record the result** — Append a new row to `/memories/session/-agent-pre-response-gate-rule-eval.md`. Row ID is `T{N}-{letter}` (e.g., `T3-A`). For each rule column, write `✓` if the rule passed or `-` if it failed.
+3. **Record the result** — Append a new row to `/memories/session/-agent-pre-response-gate-rule-eval.md`. Row ID is `T{N}-{letter}` (e.g., `T3-A`). For each rule column, write `✓` if the rule was not applicable or the draft already satisfied it without adjustment, `~` if the rule was applicable and the agent actively adjusted the draft to comply (rule shaped the output but no violation resulted), or `X` if a violation was detected.
 4. **If all checks pass:** deliver the response. Stop.
 5. **If any check fails and fewer than 3 passes have been attempted:** re-draft the response to eliminate all violations, then run the next pass (next letter in sequence). Return to step 1.
 6. **If any check fails and 3 passes have been attempted (A, B, C all complete):** deliver the response as-is, appended with a **Rule Eval Failure Report** block in the following format:
