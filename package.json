@@ -2,7 +2,7 @@
   "name": "honest-agent-setup",
   "displayName": "Honest Agent: Agent Conduct Setup",
   "description": "Adds AI agent conduct rules and enforcement structure to your project.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "publisher": "vega-discoveries",
   "icon": "images/icon.png",
   "engines": {

@@ -35,6 +35,7 @@ async function showIntroPanel(context, launchedKey) {
         'Files to be added:\n' +
         '  • AGENTS.md — conduct rules (project root)\n' +
         '  • .claude/CLAUDE.md — Claude reference to AGENTS.md\n' +
+        '  • .github/instructions/-agent-pre-response-gate.instructions.md\n' +
         '  • .github/skills/-agent-pre-response-gate/SKILL.md\n' +
         '  • .github/skills/-agent-conduct-rule-report/SKILL.md\n' +
         '  • .github/skills/-chat-save-transcript/SKILL.md\n\n' +
@@ -261,6 +262,44 @@ async function runSetup(context) {
     });
   }
 
+  // --- .github/instructions/-agent-pre-response-gate.instructions.md ---
+  var preResponseInstructionsTarget = path.join(
+    projectRoot, '.github', 'instructions', '-agent-pre-response-gate.instructions.md'
+  );
+  if (fs.existsSync(preResponseInstructionsTarget)) {
+    var overwriteInstructions = await vscode.window.showWarningMessage(
+      'Honest Agent Setup: .github/instructions/-agent-pre-response-gate.instructions.md already exists.\n\n' +
+      'Overwrite it with the latest version? Selecting "No" preserves any changes you have made.',
+      { modal: true },
+      'Yes, Overwrite',
+      'No, Keep Existing'
+    );
+    if (overwriteInstructions === 'Yes, Overwrite') {
+      fs.copyFileSync(
+        path.join(dataDir, '-agent-pre-response-gate.instructions.md'),
+        preResponseInstructionsTarget
+      );
+      results.push({
+        file: '.github/instructions/-agent-pre-response-gate.instructions.md',
+        action: 'Overwritten with latest version'
+      });
+    } else {
+      results.push({
+        file: '.github/instructions/-agent-pre-response-gate.instructions.md',
+        action: 'Kept existing file — not overwritten'
+      });
+    }
+  } else {
+    fs.copyFileSync(
+      path.join(dataDir, '-agent-pre-response-gate.instructions.md'),
+      preResponseInstructionsTarget
+    );
+    results.push({
+      file: '.github/instructions/-agent-pre-response-gate.instructions.md',
+      action: 'Created from template'
+    });
+  }
+
   // Show completion panel
   showCompletionPanel(context, projectRoot, results);
 }
@@ -395,11 +434,9 @@ function getCompletionHtml(projectRoot, results) {
       </li>
     </ol>
     <p>
-      On the first Copilot session after setup, the agent will read
-      <code>.github/skills/-agent-pre-response-gate/SKILL.md</code> and automatically create
-      the companion auto-attach instruction file at
-      <code>.github/instructions/-agent-pre-response-gate.instructions.md</code>.
-      After that, the gate is active on every turn without any manual step.
+      The auto-attach instruction file at
+      <code>.github/instructions/-agent-pre-response-gate.instructions.md</code>
+      ensures the pre-response gate skill is loaded on every turn automatically.
     </p>
   </div>
 
