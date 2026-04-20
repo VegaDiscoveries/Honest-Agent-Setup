@@ -20,6 +20,15 @@ On Turn 1 only:
    |--------|--------|-------------------|------------------------|---------------|
    ```
 
+2. **Create rule eval log** — Check whether `/memories/session/-agent-pre-response-gate-rule-eval.md` exists. If absent, create it with the following header and empty table. Do not populate rows here — rows are added during the Pre-Delivery Phase.
+   ```
+   # Pre-Response Gate — Rule Eval Log
+   | Turn/Eval | F-1 | F-2 | F-3 | F-4 | F-5 | F-6 | F-7 | F-8 | F-9 | F-10 | F-11 | F-12 | F-13 | F-14 | F-15 | F-16 | F-17 | F-18 | F-19 | F-20 | F-21 | F-22 | A-1 | A-2 | A-3 | A-4 |
+   |-----------|-----|-----|-----|-----|-----|-----|-----|-----|-----|------|------|------|------|------|------|------|------|------|------|------|------|------|-----|-----|-----|-----|
+   ```
+   **Column key:** `✓` = pass, `-` = fail.
+   **Row ID format:** `T{N}-{letter}` where N is the turn number and letter is the eval sequence within that turn (A = first eval, B = second eval, C = third eval).
+
 ---
 
 ## Two-Phase Gate Architecture
@@ -28,7 +37,7 @@ This gate governs two independent mandatory phases on every turn. Neither phase 
 
 | Phase | When it runs | What it does |
 |---|---|---|
-| **Turn-Open Phase** | MANDATORY FIRST TOOL CALL — before any task work | Performs Turn 1 setup (violations log); no action on subsequent turns |
+| **Turn-Open Phase** | MANDATORY FIRST TOOL CALL — before any task work | Performs Turn 1 setup (violations log + rule eval log); no action on subsequent turns |
 | **Pre-Delivery Phase** | Immediately before delivering the response | Evaluates response against conduct rules in `AGENTS.md`; re-drafts on failure |
 
 **Why two phases are required:**
@@ -65,10 +74,37 @@ Every pass evaluates the forming response against these skills:
 
 Fires immediately before delivering every response, on every turn.
 
+**Eval loop** — Up to 3 evaluation passes per turn (labelled A, B, C). For each pass:
+
 1. Evaluate the forming response against all conduct rules F-1–F-22 and avoid patterns A-1–A-4 embedded in user `AGENTS.md`.
-2. If the always-check skill subset above contains active entries, evaluate the forming response against each listed skill.
-3. **If all checks pass:** deliver the response.
-4. **If any check fails:** re-draft the response to eliminate the violation before delivering. If a violation cannot be eliminated after re-drafting, add an entry in the conduct violations log (`/memories/session/conduct-violations.md`) and disclose the issue to the user before delivering.
+2. Evaluate against the always-check skill subset above.
+3. **Record the result** — Append a new row to `/memories/session/-agent-pre-response-gate-rule-eval.md`. Row ID is `T{N}-{letter}` (e.g., `T3-A`). For each rule column, write `✓` if the rule passed or `-` if it failed.
+4. **If all checks pass:** deliver the response. Stop.
+5. **If any check fails and fewer than 3 passes have been attempted:** re-draft the response to eliminate all violations, then run the next pass (next letter in sequence). Return to step 1.
+6. **If any check fails and 3 passes have been attempted (A, B, C all complete):** deliver the response as-is, appended with a **Rule Eval Failure Report** block in the following format:
+
+   ```
+   ---
+   ## Rule Eval Failure Report
+
+   Evaluation reached the maximum of 3 passes without eliminating all violations.
+
+   ### Pass History
+   | Pass | Rules Failed |
+   |------|-------------|
+   | T{N}-A | [comma-separated list of failed rule IDs] |
+   | T{N}-B | [comma-separated list of failed rule IDs, or "none" if all passed] |
+   | T{N}-C | [comma-separated list of failed rule IDs] |
+
+   ### Changes Made Between Passes
+   - **A → B:** [One sentence describing what was revised and why.]
+   - **B → C:** [One sentence describing what was revised and why.]
+
+   ### Remaining Failures
+   For each rule still failing after pass C:
+   - **{Rule ID} — {Rule text (brief)}:** [One sentence explaining why this violation could not be eliminated.]
+   ---
+   ```
 
 ## Self-Activation
 
